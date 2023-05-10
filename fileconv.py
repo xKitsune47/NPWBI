@@ -4,16 +4,19 @@ import xmltodict
 import json
 from yaml import SafeLoader
 
+print("The file will be located in the same place as the executable file!")
 filePath = input("Paste in the path to the file:\n")
+
 if not os.path.isfile(filePath):
-    print("File does not exist")
+    quit()
+
 if ''.join(list(filePath)[-4:]) in ['yaml', 'json']:
     pConvFormat = ''.join(list(filePath)[-4:])
 elif ''.join(list(filePath)[-3:]) in ['xml', 'yml']:
     pConvFormat = ''.join(list(filePath)[-3:])
 else:
-    print("The format of the file is not supported by the program")
     quit()
+
 newFileName = input("Specify the name of the new file:\n")
 convType = int(input("Conversion type (1-xml, 2-json, 3-yml)\n"))
 
