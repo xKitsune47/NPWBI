@@ -1,0 +1,27 @@
+name: buildExe
+on: 
+  push:
+    branches: master
+  schedule:
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: pythonSetup
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          architecture: 'x64'
+      - run: pip install pyinstaller
+      - name: pyLib
+        run: |
+          ../../pythonLibraries.ps1
+      - run: pyinstaller --onefile fileconv.py
+      - name: sendExe
+        uses: actions/upload-artifact@v3
+        with:
+          name: fileConv.exe
+          path: dist/fileConv.exe
